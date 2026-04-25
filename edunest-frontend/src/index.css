@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* ══════════════════════════════════════════
+   DARK THEME — True Black
+══════════════════════════════════════════ */
+:root, [data-theme="dark"] {
+  --bg-primary:    #000000;
+  --bg-secondary:  #111111;
+  --bg-card:       rgba(18, 18, 18, 0.85);
+  --text-primary:  #ffffff;
+  --text-secondary:#a0a0a0;
+  --accent-color:  #3b82f6;
+  --accent-hover:  #2563eb;
+  --danger-color:  #ef4444;
+  --success-color: #22c55e;
+  --glass-bg:      rgba(255, 255, 255, 0.05);
+  --glass-border:  rgba(255, 255, 255, 0.08);
+  --input-bg:      rgba(255, 255, 255, 0.06);
+  --input-border:  rgba(255, 255, 255, 0.12);
+  --input-text:    #ffffff;
+  --nav-bg:        rgba(0, 0, 0, 0.92);
+  --shadow:        rgba(0, 0, 0, 0.6);
+  --orb-opacity:   0.15;
+  --font-main:     'Outfit', sans-serif;
+  --card-hover-bg: rgba(255,255,255,0.07);
+  --divider:       rgba(255,255,255,0.07);
+  --badge-bg:      rgba(59,130,246,0.15);
+  --badge-border:  rgba(59,130,246,0.3);
+  --badge-text:    #93c5fd;
+}
+
+/* ══════════════════════════════════════════
+   LIGHT THEME — Pure White
+══════════════════════════════════════════ */
+[data-theme="light"] {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f8f8f8;
+  --bg-card:       rgba(255, 255, 255, 0.95);
+  --text-primary:  #111111;
+  --text-secondary:#555555;
+  --accent-color:  #2563eb;
+  --accent-hover:  #1d4ed8;
+  --danger-color:  #dc2626;
+  --success-color: #16a34a;
+  --glass-bg:      rgba(255, 255, 255, 0.9);
+  --glass-border:  rgba(0, 0, 0, 0.08);
+  --input-bg:      #ffffff;
+  --input-border:  rgba(0, 0, 0, 0.15);
+  --input-text:    #111111;
+  --nav-bg:        rgba(255, 255, 255, 0.97);
+  --shadow:        rgba(0, 0, 0, 0.08);
+  --orb-opacity:   0.04;
+  --card-hover-bg: rgba(0,0,0,0.02);
+  --divider:       rgba(0,0,0,0.07);
+  --badge-bg:      rgba(37,99,235,0.08);
+  --badge-border:  rgba(37,99,235,0.2);
+  --badge-text:    #1d4ed8;
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL SETUP & ANIMATIONS
+══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatElement {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  
+  /* Fascinating interactive mesh gradient background */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, var(--orb-opacity)) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, var(--orb-opacity)) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(236, 72, 153, var(--orb-opacity)) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(6, 182, 212, var(--orb-opacity)) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite alternate;
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ══════════════════════════════════════════
+   GLASS CARD (Enhanced)
+══════════════════════════════════════════ */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 24px var(--shadow);
+  color: var(--text-primary);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.6s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 32px var(--shadow), 0 0 20px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.glass-card:hover::before {
+  left: 200%;
+}
+
+/* ══════════════════════════════════════════
+   BUTTONS (Enhanced)
+══════════════════════════════════════════ */
+.btn-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--accent-color), #7c3aed);
+  background-size: 150% auto;
+  color: #ffffff !important;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-main);
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* ══════════════════════════════════════════
+   FORM INPUTS
+══════════════════════════════════════════ */
+input, select, textarea {
+  background: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border: 1px solid var(--input-border) !important;
+  font-family: var(--font-main);
+  font-size: 15px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.2s;
+  width: 100%;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════
+   THEME TOGGLE BUTTON
+══════════════════════════════════════════ */
+.theme-toggle {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 999px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  transform: rotate(18deg) scale(1.1);
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE UTILITIES
+══════════════════════════════════════════ */
+/* Mobile hamburger — hidden by default, handled in Navbar */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links-desktop {
+    display: none !important;
+  }
+
+  .nav-links-mobile {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+    animation: slideDown 0.25s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .glass-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 1rem 0.75rem;
+  }
+}
+
+/* ══════════════════════════════════════════
+   SMOOTH TRANSITIONS FOR EVERYTHING
+══════════════════════════════════════════ */
+.glass-card,
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent layout shift during page transitions */
+* {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
