@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/courses/**").permitAll()
                         .requestMatchers("/api/certificate/download/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
