@@ -39,7 +39,7 @@ const Learn = () => {
     
     // Create new stomp client
     const client = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:5000/ws/progress'),
+      webSocketFactory: () => new SockJS('https://edunest-1-6xkb.onrender.com/ws/progress'),
       onConnect: () => {
         client.subscribe(`/topic/progress/${user.id}`, (message) => {
           if (message.body) {

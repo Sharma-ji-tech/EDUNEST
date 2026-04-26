@@ -21,7 +21,7 @@ const StudentDashboard = () => {
   const handleDownloadCert = async (courseId) => {
     try {
       const res = await api.get(`/certificate/${courseId}`);
-      window.open('http://localhost:5000' + res.data.data, '_blank');
+      window.open('https://edunest-1-6xkb.onrender.com' + res.data.data, '_blank');
     } catch (err) {
         alert('Certificate is not yet available for this course.');
     }
